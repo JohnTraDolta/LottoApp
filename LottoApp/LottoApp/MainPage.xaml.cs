@@ -18,5 +18,7 @@ namespace LottoApp
             InitializeComponent();
             
         }
+
+
     }
 }

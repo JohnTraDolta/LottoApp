@@ -66,9 +66,9 @@ namespace LottoApp.Droid
                     var oldTxtColor = button.TextColor;
 
                     button.BackgroundColor = button.AlternateBackgroundColor;
-                    button.AlternateBackgroundColor = oldBgColor;
-
                     button.TextColor = button.AlternateTextColor;
+
+                    button.AlternateBackgroundColor = oldBgColor;                    
                     button.AlternateTextColor = oldTxtColor;
 
                     return false;
