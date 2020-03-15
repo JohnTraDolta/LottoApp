@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage BackgroundColor="{StaticResource PrimaryRed}" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:lottoApp="clr-namespace:LottoApp" xmlns:lottoApp1="clr-namespace:LottoApp.ViewModels" x:Class="LottoApp.Views.CouponsList">
+    <ContentPage.BindingContext>
+        <lottoApp1:CouponViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <CollectionView SelectionMode="Single" ItemsSource="{Binding Coupons}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="20">
+                        <Frame VerticalOptions="Center" >
+                            <Label Text="{Binding Name}" FontSize="20"/>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

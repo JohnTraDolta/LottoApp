@@ -1,19 +1,12 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Threading.Tasks;
 using Android.Content;
 using Android.Graphics;
-using Android.Graphics.Drawables;
-using Android.Graphics.Drawables.Shapes;
 using Android.Text;
 using Android.Views;
-using Java.Nio.Channels;
 using LottoApp;
 using LottoApp.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using Xamarin.Forms.Platform.Android.FastRenderers;
-using Color = Android.Graphics.Color;
-using FrameRenderer = Xamarin.Forms.Platform.Android.FrameRenderer;
 using View = Android.Views.View;
 
 [assembly: ExportRendererAttribute(typeof(NumberButton), typeof(NumberButtonRender))]
@@ -21,7 +14,7 @@ namespace LottoApp.Droid
 {
     public sealed class NumberButtonRender : ViewRenderer<NumberButton, View>
     {
-        
+
         public NumberButtonRender(Context context) : base(context)
         {
             SetWillNotDraw(false);
@@ -29,7 +22,7 @@ namespace LottoApp.Droid
 
         public override void Draw(Canvas canvas)
         {
-            NumberButton button = (NumberButton) this.Element;
+            NumberButton button = (NumberButton)this.Element;
 
             Paint backgroundPaint = new Paint()
             {
@@ -44,14 +37,14 @@ namespace LottoApp.Droid
                 TextAlign = Paint.Align.Center
             };
 
-            
+
             Rect bounds = new Rect();
             textPaint.GetTextBounds(button.Text, 0, button.Text.Length, bounds);
 
-            canvas.DrawCircle((float)canvas.Width/2, (float)canvas.Height/2, (float)button.WidthRequest, backgroundPaint);
+            canvas.DrawCircle((float)canvas.Width / 2, (float)canvas.Height / 2, (float)button.WidthRequest, backgroundPaint);
             canvas.DrawText(button.Text,
-                (float)canvas.Width/2, 
-                ((float)canvas.Height + bounds.Height())/2 , textPaint);
+                (float)canvas.Width / 2,
+                ((float)canvas.Height + bounds.Height()) / 2, textPaint);
 
         }
 
@@ -65,17 +58,26 @@ namespace LottoApp.Droid
                     var oldBgColor = button.BackgroundColor;
                     var oldTxtColor = button.TextColor;
 
+
+
+
+
                     button.BackgroundColor = button.AlternateBackgroundColor;
                     button.TextColor = button.AlternateTextColor;
 
-                    button.AlternateBackgroundColor = oldBgColor;                    
+                    button.AlternateBackgroundColor = oldBgColor;
                     button.AlternateTextColor = oldTxtColor;
+
+                    var result =
+                    oldTxtColor == Xamarin.Forms.Color.Black ?
+                        Task.Run(async () => await button.ScaleTo(1, 150, easing: Easing.SpringOut)) :
+                        Task.Run(async () => await button.ScaleTo(1.3, 100, easing: Easing.SpringOut));
 
                     return false;
                 default:
                     return base.OnTouchEvent(e);
             }
-            
+
         }
     }
 

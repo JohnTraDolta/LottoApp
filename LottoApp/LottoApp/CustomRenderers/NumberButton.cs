@@ -12,7 +12,6 @@ namespace LottoApp
         public static readonly BindableProperty AlternateBackgroundColorProperty = BindableProperty.Create(nameof(AlternateBackgroundColorProperty), typeof(Color), typeof(NumberButton), Color.White, BindingMode.Default);
         public static readonly BindableProperty AlternateTextColorProperty = BindableProperty.Create(nameof(AlternateTextColorProperty), typeof(Color), typeof(NumberButton), Color.Black, BindingMode.Default);
 
-
         public double CornerRadius
         {
             get => (double) GetValue(CornerRadiusProperty);
