@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Linq;
 using System.Windows.Input;
 using LottoApp.Models;
@@ -12,8 +13,21 @@ namespace LottoApp
 {
     public class CheckLottoViewModel : INotifyPropertyChanged
     {
-        private readonly Coupon _coupon;
+        private List<LottoCoupon> _coupons;
+        public ObservableCollection<LottoCoupon> Coupons { get; set; }
+
         private List<int> PickedNumbers = new List<int>();
+        private bool _canPress;
+
+        public bool CanPress
+        {
+            get { return _canPress; }
+            set
+            {
+                _canPress = !value;
+                OnPropertyChanged(nameof(CanPress));
+            }
+        }
 
         private string pickedNumbersString;
 
@@ -38,8 +52,13 @@ namespace LottoApp
 
         public CheckLottoViewModel()
         {
-            
+            Coupons = new ObservableCollection<LottoCoupon>()
+                {
+                    new LottoCoupon("Mors Lotto", new List<Line>{new Line(new List<int> {1,2,3})}), 
+                    new LottoCoupon("Fars Lotto", new List<Line>{new Line(new List<int>{4,5,6})})};
         }
+        
+
 
         public ICommand PickedNumbersChangedCommand => new Command((x) =>
         {

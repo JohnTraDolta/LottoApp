@@ -1,68 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:lottoApp="clr-namespace:LottoApp;assembly=LottoApp"
-             mc:Ignorable="d"
-             x:Class="LottoApp.CheckLottoView"
-             BackgroundColor="Red"
-             Visual="Material">
+<ContentPage
+    x:Class="LottoApp.CheckLottoView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:lottoApp="clr-namespace:LottoApp;assembly=LottoApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    BackgroundColor="Red"
+    Visual="Material"
+    mc:Ignorable="d">
     <ContentPage.BindingContext>
-        <lottoApp:CheckLottoViewModel/>
+        <lottoApp:CheckLottoViewModel />
     </ContentPage.BindingContext>
-    <StackLayout >
-        <StackLayout>
-            <Label Text="Lotto" HorizontalOptions="Center" FontSize="40" TextColor="White"/>
-            <Frame BackgroundColor="White"  >
-                <Label Text="{Binding PickedNumbersString}" FontSize="20" HorizontalOptions="Center"/>
-            </Frame>
-            <Grid>
-                <CollectionView x:Name="CouponOne" SelectionMode="Multiple" ItemsSource="{Binding Numbers}"
-                        SelectionChangedCommand="{Binding PickedNumbersChangedCommand}"
-                        SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItems}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="6" ></GridItemsLayout>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <lottoApp:NumberButton
-                        Text="{Binding .}" TextColor="White"
-                        FontSize="75" VerticalOptions="Center" HorizontalOptions="Center"
-                        BackgroundColor="{StaticResource DarkRed}" CornerRadius="50" 
-                        HeightRequest="45" WidthRequest="65" Margin="10" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <CollectionView x:Name="CouponTwo" SelectionMode="Multiple" TranslationX="500" ItemsSource="{Binding Numbers}"
-                        SelectionChangedCommand="{Binding PickedNumbersChangedCommand}"
-                        SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItems}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="6" ></GridItemsLayout>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <lottoApp:NumberButton
-                        Text="{Binding .}" TextColor="White"
-                        FontSize="75" VerticalOptions="Center" HorizontalOptions="Center"
-                        BackgroundColor="{StaticResource DarkRed}" CornerRadius="50" 
-                        HeightRequest="45" WidthRequest="65" Margin="10" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </Grid>
+    <Grid>
+        <CarouselView ItemsSource="{Binding Coupons}">
 
-            <Button Margin="20,0,20,35" Text="Check!" FontSize="20" Command="{Binding show}" BackgroundColor="White" CornerRadius="20" />
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <CollectionView
+                            Footer="{Binding CheckCouponCommand}"
+                            Header="{Binding}"
+                            ItemsSource="{Binding NumbersToPickFrom}"
+                            SelectionChangedCommand="{Binding ItemSelectedCommand}"
+                            SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItems, Mode=TwoWay}"
+                            SelectionMode="Multiple">
+                            <CollectionView.FooterTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <Button
+                                            Margin="25"
+                                            BackgroundColor="White"
+                                            Command="{Binding .}"
+                                            CornerRadius="20"
+                                            FontSize="20"
+                                            HorizontalOptions="Center"
+                                            Text="Check!"
+                                            VerticalOptions="Center"
+                                            WidthRequest="200" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </CollectionView.FooterTemplate>
+                            <CollectionView.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Label
+                                            Margin="0,20,0,0"
+                                            FontSize="40"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding Name}"
+                                            TextColor="White" />
+                                        <Frame
+                                            Grid.Row="1"
+                                            Margin="0,0,0,10"
+                                            BackgroundColor="White"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                Margin="0"
+                                                FontSize="20"
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding PickedNumbersString}"
+                                                VerticalTextAlignment="Center" />
+                                        </Frame>
 
-        </StackLayout>
-        <FlexLayout VerticalOptions="Center" >
-            <Frame Padding="10" FlexLayout.Grow="1" CornerRadius="0" x:Name="fallesLotto">
-                <Label FontSize="20" BackgroundColor="White" Text="Mors Lotto" HorizontalOptions="Center"/>
-            </Frame>
-            <Frame Padding="10" CornerRadius="0" BackgroundColor="Gainsboro" x:Name="MorsLotto" FlexLayout.Grow="1">
-                <Label FontSize="20" Text="Fælles Lotto" HorizontalOptions="Center"/>
-            </Frame>
-        </FlexLayout>
 
-    </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.HeaderTemplate>
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="6" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <lottoApp:NumberButton
+                                        Margin="10"
+                                        BackgroundColor="{StaticResource DarkRed}"
+                                        CornerRadius="50"
+                                        FontSize="75"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding .}"
+                                        TextColor="White"
+                                        VerticalOptions="Center"
+                                        WidthRequest="65" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+    </Grid>
+
 </ContentPage>
