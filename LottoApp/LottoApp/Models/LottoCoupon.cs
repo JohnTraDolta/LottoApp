@@ -91,7 +91,8 @@ namespace LottoApp.Models
                     anyCorrects = true;
                 }
 
-                
+                i++;
+
             }
 
             if (!anyCorrects)

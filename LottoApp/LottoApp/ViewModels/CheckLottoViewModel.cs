@@ -54,10 +54,36 @@ namespace LottoApp
         {
             Coupons = new ObservableCollection<LottoCoupon>()
                 {
-                    new LottoCoupon("Mors Lotto", new List<Line>{new Line(new List<int> {1,2,3})}), 
-                    new LottoCoupon("Fars Lotto", new List<Line>{new Line(new List<int>{4,5,6})})};
+                    new LottoCoupon("Mors Lotto", new List<Line>
+                    {
+                        new Line(new List<int>{5,6,11,13,18,20,28}),
+                        new Line(new List<int>{2,4,10,11,20,22,30}),
+                        new Line(new List<int>{1,5,8,10,20,32,33}),
+                        new Line(new List<int>{5,10,11,12,18,20,28}),
+                        new Line(new List<int>{3,4,5,7,9,10,16}),
+                        new Line(new List<int>{10,11,16,17,20,22,23}),
+                        new Line(new List<int>{8,11,13,20,21,22,30}),
+                        new Line(new List<int>{4,5,7,13,15,20,24}),
+                        new Line(new List<int>{3,5,6,7,8,10,32}),
+                        new Line(new List<int>{5,12,14,19,22,27,32}),
+                    }),
+
+                    new LottoCoupon("Fælles Lotto",
+                        new List<Line>
+                        {
+                            new Line(new List<int>{1,7,10,16,20,24,27}),
+                            new Line(new List<int>{3,6,8,11,14,21,34}),
+                            new Line(new List<int>{2,4,11,12,20,22,28}),
+                            new Line(new List<int>{8,11,13,19,20,21,32}),
+                            new Line(new List<int>{7,9,10,17,22,28,32}),
+                            new Line(new List<int>{4,9,10,24,29,33,34}),
+                            new Line(new List<int>{4,5,7,10,16,22,25,30}),
+                            new Line(new List<int>{6,7,12,16,25,26,30}),
+                            new Line(new List<int>{3,4,5,12,13,15,20}),
+                            new Line(new List<int>{1,11,13,19,23,29,30}),
+                        })};
         }
-        
+
 
 
         public ICommand PickedNumbersChangedCommand => new Command((x) =>
@@ -84,7 +110,7 @@ namespace LottoApp
             PickedNumbers = PickedNumbers.Except(list).ToList();
             PickedNumbers.Sort();
 
-        PickedNumbersString = string.Join(" ", PickedNumbers.Select(e => e.ToString()));
+            PickedNumbersString = string.Join(" ", PickedNumbers.Select(e => e.ToString()));
         });
         #region property changed event and event handler
         public event PropertyChangedEventHandler PropertyChanged;

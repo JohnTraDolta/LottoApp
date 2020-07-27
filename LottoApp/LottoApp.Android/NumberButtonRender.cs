@@ -55,8 +55,8 @@ namespace LottoApp.Droid
             switch (motionEventActions)
             {
                 case MotionEventActions.Down:
-                    return true;
-                case MotionEventActions.Up:
+                //    return true;
+                //case MotionEventActions.Up:
                     var oldBgColor = button.BackgroundColor;
                     var oldTxtColor = button.TextColor;
 
