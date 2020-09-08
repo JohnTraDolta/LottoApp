@@ -11,6 +11,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check MSBuild
-        run: msbuild /help
+      - name: Pull Code
+        run: actions/checkout@v2
+      - name: Build
+        run: msbuild LottoApp.sln
+      - name: CheckBuild
+        run: ls LottoApp/ -R
 
