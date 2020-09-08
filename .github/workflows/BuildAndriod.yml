@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Pull Code
         uses: actions/checkout@v2
+      - name: Restore
+        run: nuget restore LottoApp.sln
       - name: Build
         run: msbuild LottoApp.sln
       - name: CheckBuild
